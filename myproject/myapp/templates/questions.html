@@ -1,0 +1,78 @@
+{% extends 'base.html' %}
+{% block title %}Customize Your Plan — Idea-to-Deploy{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="stepper-wrapper">
+        <div class="stepper">
+            <div class="step complete">
+                <div class="step-icon"><i class="bi bi-lightbulb-fill"></i></div>
+                <div class="step-label">Your Idea</div>
+            </div>
+            <div class="step active">
+                <div class="step-icon"><i class="bi bi-sliders"></i></div>
+                <div class="step-label">Customize</div>
+            </div>
+            <div class="step">
+                <div class="step-icon"><i class="bi bi-rocket-takeoff-fill"></i></div>
+                <div class="step-label">Get Plan</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="auth-form-container mt-4">
+        <form method="post" action="{% url 'questions' %}">
+            {% csrf_token %}
+            <div class="p-4 p-md-5">
+                <div class="text-center mb-4">
+                    <h2 class="h3 fw-bold">Customize Your Deployment</h2>
+                    <p class="text-muted">Answer these questions to tailor the hosting recommendations.</p>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6 mb-4">
+                        <label class="form-label fw-bold"><i class="bi bi-code-slash me-2"></i>Development Style</label>
+                        <select class="form-select" name="dev_style">
+                            <option selected>Fully custom code</option>
+                            <option>No-code / Low-code</option>
+                        </select>
+                    </div>
+                    <div class="col-md-6 mb-4">
+                        <label class="form-label fw-bold"><i class="bi bi-people-fill me-2"></i>Monthly Users (Estimate)</label>
+                        <input type="text" class="form-control" name="monthly_users" placeholder="e.g., 1k, 10k, 100k">
+                    </div>
+                    <div class="col-md-6 mb-4">
+                        <label class="form-label fw-bold"><i class="bi bi-hdd-stack-fill me-2"></i>Runtime Needs</label>
+                        <select class="form-select" name="runtime_needs">
+                            <option selected>Standard web server (HTTP)</option>
+                            <option>Realtime (WebSockets)</option>
+                        </select>
+                    </div>
+                    <div class="col-md-6 mb-4">
+                        <label class="form-label fw-bold"><i class="bi bi-cloud-arrow-up-fill me-2"></i>Media / Storage</label>
+                        <select class="form-select" name="media_uploads">
+                            <option selected>Yes — user profile images</option>
+                            <option>Yes — images and videos</option>
+                            <option>No media uploads</option>
+                        </select>
+                    </div>
+                    <div class="col-md-12 mb-4">
+                        <label class="form-label fw-bold"><i class="bi bi-person-circle me-2"></i>User Authentication</label>
+                        <select class="form-select" name="auth_needed">
+                            <option selected>Yes — simple email/password</option>
+                            <option>Yes — social logins (Google, etc.)</option>
+                            <option>No authentication needed</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="d-grid mt-3">
+                    <button type="submit" class="btn btn-primary py-2 fw-bold">
+                        Generate My Deployment Plan <i class="bi bi-magic ms-2"></i>
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

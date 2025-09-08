@@ -1,0 +1,349 @@
+/* static/css/style.css */
+
+/* 1. Global Styles & Theme */
+:root {
+    --bs-primary: #667EEA;
+    --bs-primary-rgb: 102, 126, 234;
+    --bs-body-font-family: 'Poppins', sans-serif;
+}
+
+html, body {
+    height: 100%;
+}
+
+body {
+    font-family: var(--bs-body-font-family);
+    color: #A0AEC0;
+}
+
+.gradient-background {
+    background: linear-gradient(150deg, #1A202C, #2D3748, #4A5568);
+    background-size: 200% 200%;
+    animation: gradient-animation 15s ease infinite;
+}
+
+@keyframes gradient-animation {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+/* 2. Header / Navbar */
+.navbar {
+    background-color: rgba(26, 32, 44, 0.6);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.navbar .nav-link {
+    transition: color 0.3s ease;
+}
+
+.navbar .nav-link:hover {
+    color: white;
+}
+
+/* 3. Main Content Containers (Cards) */
+.idea-form-container,
+.auth-form-container,
+.report-container {
+    background-color: white;
+    border-radius: 1rem;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+    animation: fadeInUp 0.8s ease-out forwards;
+    opacity: 0;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* 4. Form Elements */
+.idea-form-container .form-control,
+.auth-form-container .form-control,
+.auth-form-container .form-select {
+    background-color: #F7FAFC;
+    border: 1px solid #E2E8F0;
+    padding: 0.75rem 1rem;
+    font-size: 1rem;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.idea-form-container .form-control:focus,
+.auth-form-container .form-control:focus,
+.auth-form-container .form-select:focus {
+    background-color: white;
+    border-color: var(--bs-primary);
+    box-shadow: 0 0 0 4px rgba(var(--bs-primary-rgb), 0.15);
+    outline: none;
+}
+
+.form-label i {
+    color: var(--bs-primary);
+}
+
+/* 5. Buttons */
+.btn-primary {
+    background: linear-gradient(45deg, #667EEA, #764BA2);
+    border: none;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(var(--bs-primary-rgb), 0.2);
+    font-weight: 600;
+}
+
+.btn-primary:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 7px 20px rgba(var(--bs-primary-rgb), 0.3);
+}
+
+/* 6. Home Page: Hero & Features */
+.hero-section {
+    padding: 6rem 0;
+}
+
+.hero-title {
+    text-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.hero-subtitle {
+    max-width: 600px;
+}
+
+.features-section {
+    padding: 4rem 0 6rem 0;
+}
+
+.feature-icon-wrapper {
+    width: 80px;
+    height: 80px;
+    margin: 0 auto;
+    background-color: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 1.25rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2.5rem;
+    color: var(--bs-primary);
+    transition: all 0.3s ease;
+}
+
+.features-section .col-md-4:hover .feature-icon-wrapper {
+    transform: translateY(-5px) scale(1.05);
+    background-color: rgba(var(--bs-primary-rgb), 0.1);
+    box-shadow: 0 0 20px rgba(var(--bs-primary-rgb), 0.2);
+}
+
+/* 7. Questions Page: Progress Bar */
+.progress-bar {
+    background-color: var(--bs-primary);
+}
+
+/* 8. Wizard / Stepper UI */
+.stepper-wrapper {
+    padding: 1rem 0;
+}
+
+.stepper {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    position: relative;
+    color: #A0AEC0;
+}
+
+.stepper::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background-color: rgba(255, 255, 255, 0.1);
+    transform: translateY(-50%);
+    z-index: 1;
+}
+
+.step {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    z-index: 2;
+    position: relative;
+    width: 25%;
+}
+
+.step-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background-color: rgba(45, 55, 72, 0.8);
+    border: 2px solid rgba(255, 255, 255, 0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    transition: all 0.3s ease;
+    margin-bottom: 0.5rem;
+}
+
+.step-label {
+    font-size: 0.85rem;
+    font-weight: 500;
+}
+
+/* Stepper Active & Complete States */
+.step.active .step-icon,
+.step.complete .step-icon {
+    background-color: var(--bs-primary);
+    border-color: var(--bs-primary);
+    color: white;
+}
+.step.active .step-label,
+.step.complete .step-label {
+    color: white;
+    font-weight: 600;
+}
+
+/* Stack Confirmation Section */
+.stack-cards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+}
+
+.stack-card {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    background-color: #F7FAFC;
+    border: 1px solid #E2E8F0;
+    padding: 1rem;
+    border-radius: 0.75rem;
+    transition: all 0.3s ease;
+}
+
+.stack-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+    border-color: var(--bs-primary);
+}
+
+.stack-card img {
+    width: 40px;
+    height: 40px;
+}
+
+.stack-card strong {
+    color: #2D3748;
+}
+
+/* 9. Admin Dashboard */
+.dashboard-sidebar {
+    background-color: rgba(45, 55, 72, 0.6);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 1rem;
+    padding: 1rem;
+}
+
+.sidebar-nav a {
+    display: block;
+    padding: 0.75rem 1.25rem;
+    color: #A0AEC0;
+    text-decoration: none;
+    border-radius: 0.5rem;
+    font-weight: 500;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.sidebar-nav a:hover {
+    background-color: rgba(255, 255, 255, 0.05);
+    color: white;
+}
+
+.sidebar-nav a.active {
+    background-color: var(--bs-primary);
+    color: white;
+    font-weight: 600;
+}
+
+.stat-card {
+    background-color: rgba(45, 55, 72, 0.6);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 1.5rem;
+    border-radius: 1rem;
+    color: white;
+}
+
+.stat-icon {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.75rem;
+    margin-bottom: 1rem;
+}
+
+.stat-value {
+    font-size: 2.25rem;
+    font-weight: 700;
+    line-height: 1;
+}
+
+.stat-label {
+    color: #A0AEC0;
+    font-size: 0.9rem;
+}
+
+.data-panel {
+    background-color: rgba(45, 55, 72, 0.6);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 1.5rem;
+    border-radius: 1rem;
+}
+
+.data-panel .table {
+    --bs-table-bg: transparent;
+    --bs-table-hover-bg: rgba(255, 255, 255, 0.05);
+    --bs-table-color: #A0AEC0;
+    --bs-table-border-color: rgba(255, 255, 255, 0.1);
+}
+
+.data-panel .table thead th {
+    color: white;
+    font-weight: 600;
+    border-bottom: 2px solid rgba(255, 255, 255, 0.2);
+}
+
+/* 10. 404 Error Page */
+.error-icon {
+    font-size: 5rem;
+    color: var(--bs-primary);
+}
+.error-code {
+    text-shadow: 0 5px 20px rgba(0,0,0,0.2);
+}
+
+/* 11. Footer */
+footer {
+    background-color: #1A202C !important;
+}
+
+footer a {
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+footer a:hover {
+    color: white !important;
+}

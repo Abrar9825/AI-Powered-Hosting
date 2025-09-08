@@ -1,0 +1,164 @@
+{% extends 'base.html' %}
+{% block title %}Your Deployment Plan — Idea-to-Deploy{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-lg-11 col-xl-10">
+
+            <div class="report-container">
+                <div class="p-4 p-md-5">
+
+                    <div class="text-center">
+                        <h1 class="display-6 fw-bold">Your Deployment Plan</h1>
+                        <p class="lead text-muted">A free-tier strategy generated for your <strong class="text-dark">"Food Delivery App"</strong> idea.</p>
+                    </div>
+
+                    <hr class="my-4 my-md-5">
+
+                    <div class="table-responsive">
+                        <table class="table plan-table">
+                            <thead>
+                                <tr>
+                                    <th>Component</th>
+                                    <th>Recommended Service</th>
+                                    <th>Free Tier Details</th>
+                                    <th>Quick Setup</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        <div class="d-flex align-items-center">
+                                            <i class="bi bi-display-fill fs-4 text-primary me-3"></i>
+                                            <div>
+                                                <strong class="d-block">Frontend</strong>
+                                                <small class="text-muted">User Interface</small>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="d-flex align-items-center">
+                                            <img src="https://www.vectorlogo.zone/logos/netlify/netlify-icon.svg" class="provider-logo" alt="Netlify Logo">
+                                            <span>Netlify</span>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <strong class="d-block">100 GB</strong>
+                                        <small class="text-muted">Bandwidth/month</small>
+                                    </td>
+                                    <td>
+                                        <button class="btn btn-sm btn-outline-secondary">View Commands</button>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td>
+                                        <div class="d-flex align-items-center">
+                                            <i class="bi bi-server fs-4 text-primary me-3"></i>
+                                            <div>
+                                                <strong class="d-block">Backend</strong>
+                                                <small class="text-muted">API & Logic</small>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="d-flex align-items-center">
+                                            <img src="https://www.vectorlogo.zone/logos/render/render-icon.svg" class="provider-logo" alt="Render Logo">
+                                            <span>Render</span>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <strong class="d-block">750 Hours</strong>
+                                        <small class="text-muted">Instance time/month</small>
+                                    </td>
+                                    <td>
+                                        <button class="btn btn-sm btn-outline-secondary">View Commands</button>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td>
+                                        <div class="d-flex align-items-center">
+                                            <i class="bi bi-database-fill fs-4 text-primary me-3"></i>
+                                            <div>
+                                                <strong class="d-block">Database</strong>
+                                                <small class="text-muted">Data Storage</small>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="d-flex align-items-center">
+                                            <img src="https://www.vectorlogo.zone/logos/mongodb/mongodb-icon.svg" class="provider-logo" alt="MongoDB Logo">
+                                            <span>MongoDB Atlas</span>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <strong class="d-block">512 MB</strong>
+                                        <small class="text-muted">M0 Cluster Storage</small>
+                                    </td>
+                                    <td>
+                                        <button class="btn btn-sm btn-outline-secondary">View .env key</button>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td>
+                                        <div class="d-flex align-items-center">
+                                            <i class="bi bi-person-badge-fill fs-4 text-primary me-3"></i>
+                                            <div>
+                                                <strong class="d-block">Authentication</strong>
+                                                <small class="text-muted">User Login</small>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="d-flex align-items-center">
+                                            <img src="https://www.vectorlogo.zone/logos/firebase/firebase-icon.svg" class="provider-logo" alt="Firebase Logo">
+                                            <span>Firebase Auth</span>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <strong class="d-block">10,000</strong>
+                                        <small class="text-muted">Monthly Active Users</small>
+                                    </td>
+                                    <td>
+                                        <button class="btn btn-sm btn-outline-secondary">View Setup Guide</button>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td>
+                                        <div class="d-flex align-items-center">
+                                            <i class="bi bi-cloud-arrow-up-fill fs-4 text-primary me-3"></i>
+                                            <div>
+                                                <strong class="d-block">Storage / Media</strong>
+                                                <small class="text-muted">File Uploads</small>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="d-flex align-items-center">
+                                            <img src="https://www.vectorlogo.zone/logos/cloudinary/cloudinary-icon.svg" class="provider-logo" alt="Cloudinary Logo">
+                                            <span>Cloudinary</span>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <strong class="d-block">25 Credits</strong>
+                                        <small class="text-muted">Generous free tier</small>
+                                    </td>
+                                    <td>
+                                        <button class="btn btn-sm btn-outline-secondary">View API Keys</button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div> <div class="text-center mt-5">
+                        <a href="/" class="btn btn-primary btn-lg"><i class="bi bi-plus-circle-fill me-2"></i>Create Another Plan</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

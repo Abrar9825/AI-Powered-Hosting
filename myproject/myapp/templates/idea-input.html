@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+{% block title %}Instant Deployment Plans — Idea-to-Deploy{% endblock %}
+
+{% block content %}
+<div class="container">
+    <section class="hero-section text-center">
+        <h1 class="display-3 fw-bold text-white hero-title">
+            Your Idea, Deployed.
+        </h1>
+        <p class="lead text-white-50 mx-auto hero-subtitle">
+            Describe your project, and our AI will generate a step-by-step deployment plan using the best free-tier cloud services.
+        </p>
+        
+        <div class="idea-form-container mx-auto">
+            <form action="{% url 'questions' %}" method="get" class="p-4 p-md-5">
+                <div class="mb-4 text-start">
+                    <label for="idea-textarea" class="form-label fs-5 fw-bold text-dark">Paste your project description here</label>
+                    <textarea class="form-control" id="idea-textarea" name="idea" rows="5" placeholder="e.g., A full-stack MERN blog with user authentication, image uploads, and a REST API..."></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary w-100 py-3 fs-5 fw-bold">
+                    Generate My Plan <i class="bi bi-arrow-right-short"></i>
+                </button>
+            </form>
+        </div>
+    </section>
+
+    <section class="features-section text-center">
+        <div class="row">
+            <div class="col-md-4 mb-4">
+                <div class="feature-icon-wrapper">
+                    <i class="bi bi-cash-stack"></i>
+                </div>
+                <h4 class="text-white mt-3">Cost-Optimized</h4>
+                <p class="text-white-50">Maps your project's needs to generous free-tier services from providers like Vercel, Render, and Supabase.</p>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="feature-icon-wrapper">
+                    <i class="bi bi-filetype-py"></i>
+                </div>
+                <h4 class="text-white mt-3">Tech-Aware AI</h4>
+                <p class="text-white-50">Understands various stacks—Python, Node.js, React, Go, databases, and more—to give you relevant advice.</p>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="feature-icon-wrapper">
+                    <i class="bi bi-list-check"></i>
+                </div>
+                <h4 class="text-white mt-3">Actionable Steps</h4>
+                <p class="text-white-50">Get more than just a list of services. Receive a clear, step-by-step guide to get your app live.</p>
+            </div>
+        </div>
+    </section>
+</div>
+{% endblock %}

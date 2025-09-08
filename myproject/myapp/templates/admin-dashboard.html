@@ -1,0 +1,127 @@
+{% extends 'base.html' %}
+{% block title %}Admin Dashboard — Idea-to-Deploy{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1 class="display-5 fw-bold text-white">Admin Dashboard</h1>
+        <button class="btn btn-outline-light"><i class="bi bi-arrow-clockwise me-2"></i>Refresh Stats</button>
+    </div>
+
+    <div class="row g-4">
+        <div class="col-lg-3">
+            <div class="dashboard-sidebar">
+                <ul class="sidebar-nav list-unstyled">
+                    <li>
+                        <a href="#" class="active"><i class="bi bi-grid-fill me-2"></i>Dashboard</a>
+                    </li>
+                    <li>
+                        <a href="#"><i class="bi bi-lightbulb-fill me-2"></i>Project Ideas</a>
+                    </li>
+                    <li>
+                        <a href="#"><i class="bi bi-hdd-stack-fill me-2"></i>Cloud Platforms</a>
+                    </li>
+                     <li>
+                        <a href="#"><i class="bi bi-people-fill me-2"></i>User Management</a>
+                    </li>
+                     <li>
+                        <a href="#"><i class="bi bi-gear-fill me-2"></i>Settings</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="col-lg-9">
+            <div class="row g-4">
+                <div class="col-md-6 col-xl-3">
+                    <div class="stat-card">
+                        <div class="stat-icon" style="background-color: rgba(102, 126, 234, 0.2); color: #8a9cff;">
+                            <i class="bi bi-stack"></i>
+                        </div>
+                        <h3 class="stat-value">{{ stats.total_projects|default:"1,204" }}</h3>
+                        <div class="stat-label">Total Projects</div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-xl-3">
+                    <div class="stat-card">
+                        <div class="stat-icon" style="background-color: rgba(56, 178, 172, 0.2); color: #38d399;">
+                            <i class="bi bi-calendar-check-fill"></i>
+                        </div>
+                        <h3 class="stat-value">{{ stats.ideas_today|default:"82" }}</h3>
+                        <div class="stat-label">Ideas Today</div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-xl-3">
+                    <div class="stat-card">
+                        <div class="stat-icon" style="background-color: rgba(235, 134, 116, 0.2); color: #f9897a;">
+                            <i class="bi bi-rocket-takeoff-fill"></i>
+                        </div>
+                        <h3 class="stat-value">{{ stats.deployed|default:"97" }}</h3>
+                        <div class="stat-label">Plans Generated</div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-xl-3">
+                    <div class="stat-card">
+                        <div class="stat-icon" style="background-color: rgba(237, 100, 166, 0.2); color: #f178b1;">
+                            <i class="bi bi-person-fill-check"></i>
+                        </div>
+                        <h3 class="stat-value">{{ stats.active_users|default:"215" }}</h3>
+                        <div class="stat-label">Active Users</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="data-panel mt-4">
+                <h5 class="text-white mb-3">Recent Project Ideas</h5>
+                <div class="table-responsive">
+                    <table class="table table-borderless table-hover">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>User Email</th>
+                                <th>Idea Preview</th>
+                                <th>Date</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for r in recent %}
+                            <tr>
+                                <td><span class="badge bg-secondary-subtle text-secondary-emphasis rounded-pill">#{{ r.id|default:"9821" }}</span></td>
+                                <td>{{ r.user|default:"alex@example.com" }}</td>
+                                <td>{{ r.preview|default:"Fitness app for..." }}</td>
+                                <td>{{ r.date|default:"2025-09-08" }}</td>
+                                <td><a class="btn btn-sm btn-primary" href="#">View Plan</a></td>
+                            </tr>
+                            {% empty %}
+                            <tr>
+                                <td><span class="badge bg-secondary-subtle text-secondary-emphasis rounded-pill">#9821</span></td>
+                                <td>alex@example.com</td>
+                                <td>Fitness app for custom workout plans</td>
+                                <td>2025-09-08</td>
+                                <td><a class="btn btn-sm btn-primary" href="#">View Plan</a></td>
+                            </tr>
+                            <tr>
+                                <td><span class="badge bg-secondary-subtle text-secondary-emphasis rounded-pill">#9820</span></td>
+                                <td>sara@dev.io</td>
+                                <td>Marketplace for vintage camera gear</td>
+                                <td>2025-09-08</td>
+                                <td><a class="btn btn-sm btn-primary" href="#">View Plan</a></td>
+                            </tr>
+                            <tr>
+                                <td><span class="badge bg-secondary-subtle text-secondary-emphasis rounded-pill">#9819</span></td>
+                                <td>mike@startup.co</td>
+                                <td>AI-powered tool for summarizing long articles</td>
+                                <td>2025-09-07</td>
+                                <td><a class="btn btn-sm btn-primary" href="#">View Plan</a></td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

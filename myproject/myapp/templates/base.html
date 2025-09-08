@@ -1,0 +1,68 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block title %}Idea-to-Deploy{% endblock %}</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body class="gradient-background">
+
+    <header class="sticky-top">
+        <nav class="navbar navbar-expand-lg navbar-dark">
+            <div class="container">
+                <a class="navbar-brand fw-bold fs-4" href="/">
+                    <i class="bi bi-lightbulb-fill text-primary me-2"></i>Idea-to-Deploy
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#nav" aria-controls="nav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <div class="collapse navbar-collapse" id="nav">
+                    <ul class="navbar-nav ms-auto align-items-lg-center">
+                        <li class="nav-item">
+                            <a class="nav-link fw-medium" href="/login/">Login</a>
+                        </li>
+                        <li class="nav-item ms-lg-3">
+                            <a class="btn btn-outline-light" href="/">Start For Free</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+
+    <footer class="bg-dark text-white pt-5 pb-4 mt-5">
+        <div class="container text-center text-md-start">
+            <div class="row text-center text-md-start">
+                <div class="col-md-3 col-lg-3 col-xl-3 mx-auto mt-3">
+                    <h5 class="text-uppercase mb-4 fw-bold text-primary">Idea-to-Deploy</h5>
+                    <p>From a simple idea to a fully deployed application. We help you build and launch faster.</p>
+                </div>
+                <div class="col-md-2 col-lg-2 col-xl-2 mx-auto mt-3"><h5 class="text-uppercase mb-4 fw-bold">Product</h5><p><a href="#" class="text-white">Features</a></p><p><a href="#" class="text-white">Pricing</a></p></div>
+                <div class="col-md-3 col-lg-2 col-xl-2 mx-auto mt-3"><h5 class="text-uppercase mb-4 fw-bold">Resources</h5><p><a href="#" class="text-white">Docs</a></p><p><a href="#" class="text-white">Blog</a></p></div>
+                <div class="col-md-4 col-lg-3 col-xl-3 mx-auto mt-3"><h5 class="text-uppercase mb-4 fw-bold">Contact</h5><p><i class="bi bi-geo-alt-fill me-3"></i>New York, NY 10012</p><p><i class="bi bi-envelope-fill me-3"></i>info@ideatodeploy.com</p></div>
+            </div>
+            <hr class="mb-4"><div class="row align-items-center"><div class="col-md-7 col-lg-8"><p>&copy; {% now "Y" %} Idea-to-Deploy. All rights reserved.</p></div><div class="col-md-5 col-lg-4"><div class="text-center text-md-end"><ul class="list-unstyled list-inline"><li class="list-inline-item"><a href="#" class="btn-floating btn-sm text-white fs-4"><i class="bi bi-twitter-x"></i></a></li><li class="list-inline-item"><a href="#" class="btn-floating btn-sm text-white fs-4"><i class="bi bi-linkedin"></i></a></li><li class="list-inline-item"><a href="#" class="btn-floating btn-sm text-white fs-4"><i class="bi bi-github"></i></a></li></ul></div></div></div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+    
+    <script src="{% static 'js/main.js' %}"></script>
+</body>
+</html>

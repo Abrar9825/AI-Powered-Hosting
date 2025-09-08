@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% block title %}Page Not Found — Idea-to-Deploy{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row align-items-center justify-content-center" style="min-height: 70vh;">
+        <div class="col-md-8 text-center">
+            
+            <div class="error-page-content">
+                <i class="bi bi-compass-fill error-icon"></i>
+                <h1 class="display-1 fw-bold text-white error-code">404</h1>
+                <p class="lead text-white-50 mt-3">
+                    It seems you've navigated to a route that doesn't exist.
+                </p>
+                <p class="text-white-50">Let's get you back on track.</p>
+                <a href="/" class="btn btn-primary mt-4"><i class="bi bi-house-door-fill me-2"></i>Return Home</a>
+            </div>
+
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+{% block title %}Login — Idea-to-Deploy{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row justify-content-center align-items-center" style="min-height: 70vh;">
+        <div class="col-md-8 col-lg-6 col-xl-4">
+            
+            <div class="auth-form-container">
+                <div class="p-4 p-md-5">
+                    <form method="post" action="{% url 'login' %}">
+                        {% csrf_token %}
+
+                        {% if error %}
+                        <div class="alert alert-danger" role="alert">
+                            {{ error }}
+                        </div>
+                        {% endif %}
+
+                        <div class="mb-3">
+                            <label for="email" class="form-label fw-bold">Email</label>
+                            <input type="email" class="form-control" id="email" name="email" placeholder="you@company.com" required>
+                        </div>
+
+                        <div class="mb-3">
+                            <input type="password" class="form-control" id="password" name="password" placeholder="••••••••" required>
+                        </div>
+
+                        <div class="d-grid mt-4">
+                            <button type="submit" class="btn btn-primary py-2 fw-bold">Sign In</button>
+                        </div>
+                    </form>
+                    
+                    </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

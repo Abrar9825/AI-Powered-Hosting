@@ -6,6 +6,7 @@ from rest_framework.response import Response
 from rest_framework import status
 from openai import OpenAI
 from pydantic import ValidationError
+from django.conf import settings
 
 from .models import (
     HostingSuggestion,
@@ -19,9 +20,9 @@ from .serializers import (
 )
 
 # Initialize OpenAI client
-client = OpenAI()
+#client = OpenAI()
 MODEL = os.getenv("OPENAI_MODEL", "gpt-4o-mini")
-
+client = OpenAI(api_key=settings.OPENAI_API_KEY)
 # System prompt for OpenAI
 SYSTEM_PROMPT = (
     "Extract technologies from the project description. "
@@ -52,7 +53,7 @@ def extract_techstack(request):
                 {"role": "system", "content": SYSTEM_PROMPT},
                 {"role": "user", "content": prompt},
             ],
-            response_format=TechStackModel,  # Note: if you are using Pydantic schema object, use that import
+            response_format=TechStackModel,
         )
 
         message = completion.choices[0].message
@@ -64,7 +65,6 @@ def extract_techstack(request):
 
         if message.content:
             try:
-                # Try validating raw JSON text if parse didn't populate message.parsed
                 parsed_again = TechStackModel.model_validate_json(message.content).model_dump()
                 row = TechStackModel.objects.create(data=parsed_again)
                 return Response(TechStackSerializer(row).data, status=status.HTTP_200_OK)
@@ -74,8 +74,10 @@ def extract_techstack(request):
         return Response({"error": "Empty response from model"}, status=status.HTTP_502_BAD_GATEWAY)
 
     except ValidationError as ve:
-        return Response({"error": "Schema validation failed", "detail": str(ve)},
-                        status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+        return Response(
+            {"error": "Schema validation failed", "detail": str(ve)},
+            status=status.HTTP_500_INTERNAL_SERVER_ERROR,
+        )
     except Exception as e:
         return Response({"error": str(e)}, status=status.HTTP_502_BAD_GATEWAY)
 
@@ -159,22 +161,69 @@ def create_deployment_pref(request):
 
     pref = serializer.save()
 
-    # get techstack data; handle case when pref.techstack might be None
     techstack_data = pref.techstack.data if getattr(pref, "techstack", None) else {"frameworks": [], "databases": []}
 
-    # IMPORTANT: pass techstack_data into suggest_hosts (fixes the missing-argument bug)
     suggestions = suggest_hosts(pref, techstack_data)
 
-    # Save each suggestion to DB
     suggestion_objs = []
     for s in suggestions:
-        # the NOTE entry may not be a real host (it is a warning). Save it anyway or skip it if you prefer.
         obj = HostingSuggestion.objects.create(
             preference=pref, name=s.get("name", "Unknown"), why=s.get("why", "")
         )
         suggestion_objs.append(obj)
 
-    return Response({
-        "preferences": DeploymentPreferenceSerializer(pref).data,
-        "suggestions": HostingSuggestionSerializer(suggestion_objs, many=True).data,
-    }, status=status.HTTP_201_CREATED)
+    return Response(
+        {
+            "preferences": DeploymentPreferenceSerializer(pref).data,
+            "suggestions": HostingSuggestionSerializer(suggestion_objs, many=True).data,
+        },
+        status=status.HTTP_201_CREATED,
+    )
+
+
+# ---------- FRONTEND VIEWS ----------
+
+def idea_input(request):
+    return render(request, 'idea-input.html')
+
+
+def login_view(request):
+    return render(request, 'login.html')
+
+
+def questions(request):
+    # You can later collect POST data and process it
+    return render(request, 'questions.html')
+
+
+def deploy_plan(request):
+    # Example context: a basic plan dictionary
+    plan = {
+        'frontend': 'Netlify',
+        'backend': 'Render',
+        'db': 'MongoDB Atlas',
+        'auth': 'Firebase Auth',
+        'storage': 'Cloudinary'
+    }
+    return render(request, 'deploy-plan.html', {'plan': plan})
+
+
+def admin_dashboard(request):
+    # Dummy data to populate dashboard
+    stats = {
+        'total_projects': 247,
+        'ideas_today': 4,
+        'deployed': 189,
+        'active_users': 156,
+    }
+    recent = [
+        {'id': '#1247', 'user': 'John Doe', 'preview': 'E-commerce platform with React', 'date': 'Dec 15, 2024'},
+        {'id': '#1246', 'user': 'Sarah Wilson', 'preview': 'Task management app with Firebase', 'date': 'Dec 14, 2024'},
+        {'id': '#1245', 'user': 'Mike Johnson', 'preview': 'Portfolio website with Next.js', 'date': 'Dec 13, 2024'},
+    ]
+    return render(request, 'admin-dashboard.html', {'stats': stats, 'recent': recent})
+
+
+# Optional custom 404
+# def custom_404(request, exception=None):
+#     return render(request, '404.html', status=404)

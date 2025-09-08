@@ -16,7 +16,8 @@ from dotenv import load_dotenv
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 load_dotenv(BASE_DIR / '.env')
-
+from decouple import config
+DEBUG = True
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
@@ -26,7 +27,7 @@ SECRET_KEY = "django-insecure-fp1a3w2^spif-c=!mif9!^6b3g+k4uc(8_^#0wle1-!-@xg$s^
 # SECURITY WARNING: don't run with debug turned on in production!
 ALLOWED_HOSTS = ['127.0.0.1', 'localhost']
 
-
+OPENAI_API_KEY = config("OPENAI_API_KEY")
 # Application definition
 
 INSTALLED_APPS = [
@@ -55,7 +56,7 @@ ROOT_URLCONF = "myproject.urls"
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [],
+        'DIRS': [BASE_DIR / "templates"],
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
@@ -117,7 +118,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
 STATIC_URL = "static/"
-
+STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
