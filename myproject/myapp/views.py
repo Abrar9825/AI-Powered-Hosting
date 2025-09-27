@@ -1,9 +1,12 @@
 from django.shortcuts import render
 import os
 from rest_framework.decorators import api_view, permission_classes
-from rest_framework.permissions import AllowAny
+from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.response import Response
-from rest_framework import status
+from rest_framework import status, generics
+from rest_framework.views import APIView
+from django.contrib.auth.models import User
+from rest_framework_simplejwt.tokens import RefreshToken
 from openai import OpenAI
 from pydantic import ValidationError
 from django.conf import settings
@@ -17,12 +20,14 @@ from .serializers import (
     HostingSuggestionSerializer,
     TechStackSerializer,
     DeploymentPreferenceSerializer,
+    RegisterSerializer,
+    LoginSerializer,
 )
 
 # Initialize OpenAI client
-#client = OpenAI()
 MODEL = os.getenv("OPENAI_MODEL", "gpt-4o-mini")
 client = OpenAI(api_key=settings.OPENAI_API_KEY)
+
 # System prompt for OpenAI
 SYSTEM_PROMPT = (
     "Extract technologies from the project description. "
@@ -34,13 +39,14 @@ SYSTEM_PROMPT = (
     "Respond only in valid JSON matching the schema."
 )
 
+# ---------------- AI-POWERED API VIEWS ----------------
 
 @api_view(["POST"])
 @permission_classes([AllowAny])
 def extract_techstack(request):
     """
     POST /api/techstack/extract/
-    Body: { "prompt": "project description..." }  (also accepts 'text')
+    Body: { "prompt": "project description..." }
     """
     prompt = request.data.get("prompt") or request.data.get("text")
     if not prompt:
@@ -84,8 +90,7 @@ def extract_techstack(request):
 
 def suggest_hosts(pref, techstack):
     """
-    pref: DeploymentPreference instance
-    techstack: dict (pref.techstack.data) or minimal dict if missing
+    Suggest hosting providers based on preferences + techstack
     """
     runtime = pref.runtime
     media = pref.media_upload
@@ -145,24 +150,13 @@ def suggest_hosts(pref, techstack):
 def create_deployment_pref(request):
     """
     POST /api/deployment/preferences/
-    Body example:
-    {
-      "techstack": 1,
-      "coding_choice": "coding",
-      "monthly_users": 1500,
-      "runtime": "serverless",
-      "media_upload": true,
-      "auth_required": true
-    }
     """
     serializer = DeploymentPreferenceSerializer(data=request.data)
     if not serializer.is_valid():
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     pref = serializer.save()
-
     techstack_data = pref.techstack.data if getattr(pref, "techstack", None) else {"frameworks": [], "databases": []}
-
     suggestions = suggest_hosts(pref, techstack_data)
 
     suggestion_objs = []
@@ -180,8 +174,38 @@ def create_deployment_pref(request):
         status=status.HTTP_201_CREATED,
     )
 
+# ---------------- AUTHENTICATION API VIEWS ----------------
 
-# ---------- FRONTEND VIEWS ----------
+class RegisterAPI(generics.CreateAPIView):
+    queryset = User.objects.all()
+    serializer_class = RegisterSerializer
+    permission_classes = [AllowAny]
+
+
+class LoginAPI(APIView):
+    permission_classes = [AllowAny]
+
+    def post(self, request):
+        serializer = LoginSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        user = serializer.validated_data
+
+        # Generate JWT token
+        refresh = RefreshToken.for_user(user)
+        return Response({
+            "refresh": str(refresh),
+            "access": str(refresh.access_token),
+            "message": "Login successful"
+        })
+
+
+class DashboardAPI(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request):
+        return Response({"message": f"Welcome to your dashboard, {request.user.username}!"})
+
+# ---------------- FRONTEND RENDER VIEWS ----------------
 
 def idea_input(request):
     return render(request, 'idea-input.html')
@@ -192,12 +216,10 @@ def login_view(request):
 
 
 def questions(request):
-    # You can later collect POST data and process it
     return render(request, 'questions.html')
 
 
 def deploy_plan(request):
-    # Example context: a basic plan dictionary
     plan = {
         'frontend': 'Netlify',
         'backend': 'Render',
@@ -209,7 +231,6 @@ def deploy_plan(request):
 
 
 def admin_dashboard(request):
-    # Dummy data to populate dashboard
     stats = {
         'total_projects': 247,
         'ideas_today': 4,
@@ -222,7 +243,6 @@ def admin_dashboard(request):
         {'id': '#1245', 'user': 'Mike Johnson', 'preview': 'Portfolio website with Next.js', 'date': 'Dec 13, 2024'},
     ]
     return render(request, 'admin-dashboard.html', {'stats': stats, 'recent': recent})
-
 
 # Optional custom 404
 # def custom_404(request, exception=None):
